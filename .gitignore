@@ -1,0 +1,25 @@
+# Secrets / environment
+**/.env
+**/.env.*.local
+**/*.local
+salesia-frontend/.dev.vars
+
+# Python
+**/.venv/
+**/__pycache__/
+**/*.pyc
+salesia-api/.pytest_cache/
+
+# Node / build output
+**/node_modules/
+salesia-frontend/.output/
+salesia-frontend/.nitro/
+salesia-frontend/.tanstack/
+salesia-frontend/dist/
+salesia-frontend/.wrangler/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

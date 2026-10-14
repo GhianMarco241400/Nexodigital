@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: salesia-api
+    runtime: python
+    plan: free
+    region: oregon
+    rootDir: salesia-api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRE_MINUTES
+        value: 60
+      - key: CORS_ORIGINS
+        value: https://salesia-frontend.onrender.com
+      - key: CATALOG_MODE
+        value: simulation
+      - key: REVIEW_MODE
+        value: heuristic
+      - key: REVIEW_PROVIDER
+        value: gemini
+
+  - type: web
+    name: salesia-frontend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: salesia-frontend
+    buildCommand: bun install --frozen-lockfile && bun run build
+    startCommand: node .output/server/index.mjs
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 22.11.0
+      - key: BUN_VERSION
+        value: 1.4.3
+      - key: NITRO_PRESET
+        value: node-server
+      - key: VITE_API_URL
+        value: https://salesia-api.onrender.com
