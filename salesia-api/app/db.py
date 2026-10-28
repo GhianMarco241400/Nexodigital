@@ -8,7 +8,7 @@ from app.config import settings
 engine = create_engine(
     settings.database_url,
     pool_pre_ping=True,
-    connect_args={"sslmode": "require"},
+    connect_args={"sslmode": "require", "connect_timeout": 10},
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
