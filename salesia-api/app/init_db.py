@@ -50,8 +50,10 @@ SCHEMA_STATEMENTS = [
         role VARCHAR(50) NOT NULL,
         password_hash TEXT NOT NULL,
         active BOOLEAN NOT NULL DEFAULT true,
+        last_login_at TIMESTAMPTZ,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )""",
+    "ALTER TABLE staff_users ADD COLUMN IF NOT EXISTS last_login_at TIMESTAMPTZ",
     """CREATE TABLE IF NOT EXISTS orders (
         id SERIAL PRIMARY KEY,
         code VARCHAR(50) UNIQUE NOT NULL DEFAULT ('PED-' || lpad(CAST(nextval('order_code_seq') AS text), 4, '0')),
