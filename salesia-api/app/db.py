@@ -5,9 +5,12 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from app.config import settings
 
+import ssl
+
 engine = create_engine(
     settings.database_url,
     pool_pre_ping=True,
+    connect_args={"sslmode": "require", "sslcontext": ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)},
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
