@@ -7,10 +7,14 @@ from app.config import settings
 
 import ssl
 
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+
 engine = create_engine(
     settings.database_url,
     pool_pre_ping=True,
-    connect_args={"sslmode": "require", "sslcontext": ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)},
+    connect_args={"sslmode": "require", "sslcontext": ctx},
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
